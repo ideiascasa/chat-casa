@@ -1,0 +1,8 @@
+{
+  "name": "chat-casa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/frkr/chat-casa.git",
+  "author": "DaviSM <davimesquita@gmail.com>",
+  "license": "MIT"
+}
