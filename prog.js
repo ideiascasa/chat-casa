@@ -22,4 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-"use strict";
+function teste() {
+    fetch("/test", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "name": "John Doe",
+            "age": 30
+        })
+    }).then(function (response) {
+        return response.json();
+    }).then(
+        function (data) {
+        alert(JSON.stringify(data));
+    });
+}
