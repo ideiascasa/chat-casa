@@ -22,26 +22,64 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
+function chatPanelUpdate(html) {
+    $("#chatPanel").html(html);
+
+    const objDiv = document.getElementById("chatPanel");
+    objDiv.scrollTop = objDiv.scrollHeight;
+}
+
+function atualizaChat() {
+
+    const telefone = $("#chatID").html();
+
+    if (telefone && telefone !== '1') {
+        user(telefone);
+    } else {
+        chatPanelUpdate('');
+    }
+
+}
+
+
 function user(who) {
-    fetch("/user", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            user: who,
-        }),
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
 
-        let html = "";
+    $("#chatID").html(who);
 
-        if (data && data.chat && data.chat.length > 0) {
-            for (const message of data.chat) {
-                if (message.role === "user") {
+    if (who === '1') {
 
-                    html += `
+        chatPanelUpdate(`<!-- Chat: left -->
+                    <li class="mb-3 d-flex flex-row align-items-end">
+                        <div class="max-width-70">
+                            <div class="user-info mb-1">
+                                 <div class="avatar rounded-circle no-thumbnail">IA</div>
+                                <span class="text-muted small">IA</span>
+                            </div>
+                            <div class="card border-0 p-3">
+                                <div class="message">Em que posso ser útil?</div>
+                            </div>
+                        </div>
+                    </li>`
+       );
+
+     } else {
+
+        fetch("/user", {
+            method: "POST",
+            body: JSON.stringify({
+                user: who,
+            }),
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+
+            let html = "";
+
+            if (data && data.chat && data.chat.length > 0) {
+                for (const message of data.chat) {
+                    if (message.role === "user") {
+
+                        html += `
                     <!-- Chat: left -->
                     <li class="mb-3 d-flex flex-row align-items-end">
                         <div class="max-width-70">
@@ -55,10 +93,10 @@ function user(who) {
                         </div>
                     </li>`
 
-                } else if (message.role === "assistant") {
+                    } else if (message.role === "assistant") {
 
-                    html +=
-                        `<!-- Chat: right -->
+                        html +=
+                            `<!-- Chat: right -->
                         <li class="mb-3 d-flex flex-row-reverse align-items-end">
                             <div class="max-width-70 text-end">
                                 <div class="user-info mb-1">
@@ -70,29 +108,37 @@ function user(who) {
                             </div>
                         </li>`
 
+                    }
                 }
             }
-        }
+
+            chatPanelUpdate(html);
+
+        });
 
 
-        $("#chatPanel").html(html);
-
-        // const scrollingElement = (document.scrollingElement || document.body);
-        // scrollingElement.scrollTop = scrollingElement.scrollHeight;
-
-    });
+    }
 }
 
 function next() {
     fetch("/next", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        method: "GET",
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
         let html = "";
+
+        html +=
+            `<li class="list-group-item px-md-4 py-2 py-md-3">
+                    <a href="javascript:user('1')" class="d-flex">
+                        <div class="avatar rounded-circle no-thumbnail">IA</div>
+                        <div class="flex-fill ms-3 text-truncate">
+                            <h6 class="d-flex justify-content-between mb-0"><span>IA</span></h6>
+                            <span class="text-muted small">gpt-3.5-turbo</span>
+                        </div>
+                    </a>
+                </li>`;
+
         for (const key in data) {
 
             let user = data[key];
@@ -111,13 +157,14 @@ function next() {
         }
 
         $("#chatList").html(html);
+        atualizaChat();
 
         setTimeout(() => {
 
                 next();
 
             },
-            1000
+            10000
         );
 
     });
@@ -131,7 +178,37 @@ function init() {
                 next();
 
             },
-            1000
+            100
         );
     });
+}
+
+function send() {
+
+    let chat = $("#textChat").val();
+    chat = chat.trim();
+
+    $("#textChat").val('');
+
+    if (chat.length > 0) {
+
+        const user = $("#chatID").html();
+        fetch("/send",{
+            method: "POST",
+            body: JSON.stringify({
+                user: user,
+                chat: chat,
+            }),
+        }).then(r=>{
+            setTimeout(() => {
+
+                    atualizaChat();
+
+                },
+                2000
+            );
+        });
+
+    }
+
 }

@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js " lang="en">
+<html class="no-js " lang="pt-BR">
 
 <head>
     <meta charset="utf-8">
@@ -36,17 +36,6 @@
                             <div class="tab-content border-top">
                                 <div class="tab-pane fade show active" id="chat-recent" role="tabpanel">
                                     <ul id="chatList" class="list-unstyled list-group list-group-custom list-group-flush mb-0">
-
-
-                                        <li class="list-group-item px-md-4 py-2 py-md-3">
-                                            <a href="singal-chat.html" class="d-flex">
-                                                <img class="avatar rounded-circle" src="assets/images/xs/avatar1.jpg" alt="">
-                                                <div class="flex-fill ms-3 text-truncate">
-                                                    <h6 class="d-flex justify-content-between mb-0"><span>Chris Fox</span> <small class="msg-time small">12:37 PM</small></h6>
-                                                    <span class="text-muted small">changed an issue from "In Progress" to</span>
-                                                </div>
-                                            </a>
-                                        </li>
 
                                     </ul>
                                 </div>
@@ -203,7 +192,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>999999999</td>
+                                                <td id="chatID"></td>
                                                 <td>
                                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UserDetails">Detalhes</button>
                                                     <button class="btn btn-danger">Excluir</button>
@@ -223,9 +212,17 @@
                             <div class="chat-message">
                                 <div class="action-bar">
                                     <button type="button" class="btn btn-link"><i class="fa fa-paperclip"></i></button>
-                                    <button class="btn btn-primary ms-2" type="button">Enviar</button>
+                                    <button class="btn btn-primary ms-2" type="button" onclick="send()">Enviar</button>
                                 </div>
-                                <textarea type="text" class="form-control" placeholder="Mensagem..."></textarea>
+                                <textarea id="textChat"  type="text" class="form-control" placeholder="Mensagem..."></textarea>
+                                <script>
+                                    document.getElementById("textChat").addEventListener("keyup", function(event) {
+                                        if (event.keyCode === 13) {
+                                            event.preventDefault();
+                                            send();
+                                        }
+                                    });
+                                </script>
                             </div>
 
                         </div>
