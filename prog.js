@@ -62,7 +62,7 @@ function user(who) {
                         <li class="mb-3 d-flex flex-row-reverse align-items-end">
                             <div class="max-width-70 text-end">
                                 <div class="user-info mb-1">
-                                    <span class="text-muted small">${data.role}</span>
+                                    <span class="text-muted small">${message.operador}</span>
                                 </div>
                                 <div class="card border-0 p-3 bg-primary text-light">
                                     <div class="message">${message.content}</div>
@@ -76,6 +76,9 @@ function user(who) {
 
 
         $("#chatPanel").html(html);
+
+        // const scrollingElement = (document.scrollingElement || document.body);
+        // scrollingElement.scrollTop = scrollingElement.scrollHeight;
 
     });
 }
