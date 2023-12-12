@@ -10,6 +10,10 @@
     <title>WhatsApp</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
 
+    <link rel='apple-touch-icon' href='logo192.png' />
+    <link rel='manifest' href='manifest.json' />
+    <meta name='theme-color' content='#218070' />
+
     <!-- project css file  -->
     <link rel="stylesheet" href="assets/css/al.style.min.css">
     <!-- project layout css file -->
@@ -173,30 +177,25 @@
                             <!-- Chat: Header -->
                             <div class="chat-header d-flex justify-content-between align-items-center border-bottom pb-3">
                                 <div class="d-flex">
-                                    <a href="javascript:void(0);" title="" data-bs-toggle="modal" data-bs-target="#UserDetails">
-                                        <img class="avatar rounded" src="assets/images/xs/avatar2.jpg" alt="avatar">
-                                    </a>
+                                    <div class="avatar rounded-circle no-thumbnail">WH</div>
                                     <div class="ms-3" data-bs-toggle="modal" data-bs-target="#UserDetails">
-                                        <h6 class="mb-0">Orlando Lentz</h6>
-                                        <small class="text-muted">Last seen: 2 hours ago</small>
+                                        <h6 class="mb-0" id="chatNome"></h6>
+                                        <small class="text-muted">WH</small>
                                     </div>
                                 </div>
                                 <div class="d-flex align-content-center">
 
-                                    <table class="text-muted small">
+                                    <table class="table table-striped-columns  text-muted small">
                                         <thead>
                                             <tr>
                                                 <th>Telefone</th>
-                                                <th></th>
+                                                <th>Waba</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td id="chatID"></td>
-                                                <td>
-                                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UserDetails">Detalhes</button>
-                                                    <button class="btn btn-danger">Excluir</button>
-                                                </td>
+                                                <td id="wabaID"></td>
                                         </tbody>
                                     </table>
 

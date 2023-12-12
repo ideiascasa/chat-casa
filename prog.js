@@ -60,11 +60,11 @@ function user(who) {
                             </div>
                         </div>
                     </li>`
-       );
+        );
 
-     } else {
+    } else {
 
-        fetch("/user", {
+        fetch("/api/user", {
             method: "POST",
             body: JSON.stringify({
                 user: who,
@@ -75,9 +75,16 @@ function user(who) {
 
             let html = "";
 
+            let waba = null;
+            let whatsappUser = "";
             if (data && data.chat && data.chat.length > 0) {
                 for (const message of data.chat) {
+
+                    waba = message.waba;
+
                     if (message.role === "user") {
+
+                        whatsappUser=data.whatsappUser;
 
                         html += `
                     <!-- Chat: left -->
@@ -112,6 +119,8 @@ function user(who) {
                 }
             }
 
+            $("#wabaID").html(waba);
+            $("#chatNome").html(whatsappUser);
             chatPanelUpdate(html);
 
         });
@@ -121,7 +130,7 @@ function user(who) {
 }
 
 function next() {
-    fetch("/next", {
+    fetch("/api/next", {
         method: "GET",
     }).then(function (response) {
         return response.json();
@@ -193,13 +202,15 @@ function send() {
     if (chat.length > 0) {
 
         const user = $("#chatID").html();
-        fetch("/send",{
+        const waba = $("#wabaID").html();
+        fetch("/api/send", {
             method: "POST",
             body: JSON.stringify({
-                user: user,
-                chat: chat,
+                user,
+                chat,
+                waba,
             }),
-        }).then(r=>{
+        }).then(r => {
             setTimeout(() => {
 
                     atualizaChat();
