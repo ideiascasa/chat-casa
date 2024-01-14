@@ -84,7 +84,7 @@ function user(who) {
 
                     if (message.role === "user") {
 
-                        whatsappUser=data.whatsappUser;
+                        whatsappUser=data.nome;
 
                         html += `
                     <!-- Chat: left -->
@@ -92,7 +92,7 @@ function user(who) {
                         <div class="max-width-70">
                             <div class="user-info mb-1">
                                  <div class="avatar rounded-circle no-thumbnail">WH</div>
-                                <span class="text-muted small">${data.whatsappUser}</span>
+                                <span class="text-muted small">${data.nome}</span>
                             </div>
                             <div class="card border-0 p-3">
                                 <div class="message">${message.content}</div>
@@ -107,7 +107,7 @@ function user(who) {
                         <li class="mb-3 d-flex flex-row-reverse align-items-end">
                             <div class="max-width-70 text-end">
                                 <div class="user-info mb-1">
-                                    <span class="text-muted small">${message.operador}</span>
+                                    <span class="text-muted small">${message.deQuem}</span>
                                 </div>
                                 <div class="card border-0 p-3 bg-primary text-light">
                                     <div class="message">${message.content}</div>
@@ -130,7 +130,9 @@ function user(who) {
 }
 
 function next() {
-    fetch("/api/next", {
+    // TODO Pega todos os usuários
+    // next deveria pegar somente os usuários que estão com o chat aberto
+    fetch("/api/all", {
         method: "GET",
     }).then(function (response) {
         return response.json();
